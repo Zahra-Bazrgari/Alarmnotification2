@@ -7,7 +7,7 @@ interface SortAlarmsProps {
 
 const SortAlarms: React.FC<SortAlarmsProps> = ({ sortOption, onSort }) => {
   return (
-    <div className="flex space-x-2">
+    <div className="grid gap-2 md:grid-cols-2">
       <button
         className={`px-4 py-2 rounded ${sortOption === 'time' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
         onClick={() => onSort('time')}

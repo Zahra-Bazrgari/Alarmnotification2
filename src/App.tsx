@@ -17,18 +17,12 @@ const App: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editAlarm, setEditAlarm] = useState<Alarm | null>(null);
   const [alarmToRing, setAlarmToRing] = useState<Alarm | null>(null);
-  const [sortOption, setSortOption] = useState<'time' | 'title'>('time');
+  const [sortOption, setSortOption] = useState<"time" | "title">("time");
 
   useEffect(() => {
-    try {
-      const savedAlarms = JSON.parse(localStorage.getItem("alarms") || "[]");
-      if (Array.isArray(savedAlarms)) {
-        setAlarms(savedAlarms);
-      } else {
-        console.error("Invalid data in localStorage for alarms.");
-      }
-    } catch (error) {
-      console.error("Error parsing alarms from localStorage:", error);
+    const savedAlarms = JSON.parse(localStorage.getItem("alarms") || "[]");
+    if (Array.isArray(savedAlarms)) {
+      setAlarms(savedAlarms);
     }
   }, []);
 
@@ -39,15 +33,16 @@ const App: React.FC = () => {
   useEffect(() => {
     const checkAlarms = () => {
       const currentTime = new Date().toTimeString().slice(0, 5);
-      const matchingAlarms = alarms.filter(alarm => alarm.time === currentTime);
+      const matchingAlarms = alarms.filter(
+        (alarm) => alarm.time === currentTime
+      );
       if (matchingAlarms.length > 0) {
-        matchingAlarms.forEach(alarm => {
+        matchingAlarms.forEach((alarm) => {
           setAlarmToRing(alarm);
         });
       }
     };
     const interval = setInterval(checkAlarms, 60000);
-
 
     checkAlarms();
 
@@ -68,10 +63,12 @@ const App: React.FC = () => {
     setAlarms(alarms.filter((alarm) => alarm.id !== id));
   };
 
-  const handleSort = (option: 'time' | 'title') => {
+  const handleSort = (option: "time" | "title") => {
     setSortOption(option);
     const sortedAlarms = [...alarms].sort((a, b) => {
-      return option === 'time' ? a.time.localeCompare(b.time) : a.title.localeCompare(b.title);
+      return option === "time"
+        ? a.time.localeCompare(b.time)
+        : a.title.localeCompare(b.title);
     });
     setAlarms(sortedAlarms);
   };
@@ -81,7 +78,7 @@ const App: React.FC = () => {
       <h1 className="text-2xl font-bold">Alarm App</h1>
       <div className="flex justify-between mt-4">
         <button
-          className="bg-blue-500 text-white px-4 py-2 rounded"
+          className="bg-blue-500 text-white h-12 px-4 py-2 rounded"
           onClick={() => setIsModalOpen(true)}
         >
           Add Alarm
